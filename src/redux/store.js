@@ -1,6 +1,6 @@
 import { createStore , combineReducers } from "redux";
-import incomesReducer from './incomes/reducer'
-import expensesReducer from "./expenses/reducer"
+import incomesReducer from './incomes/incomesReducer'
+import expensesReducer from "./expenses/expensesReducer"
 const rootReducer = combineReducers({
   incomes : incomesReducer,
   expenses : expensesReducer
