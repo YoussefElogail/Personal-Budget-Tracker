@@ -1,0 +1,12 @@
+.incomes-sec{
+  height: 100%;
+  width: 100%;
+  .incomes-table{
+    width: 100%;
+    margin: 20px 0;
+    & tr{
+      background-color: white;
+      text-align: center;
+    }
+  }
+}

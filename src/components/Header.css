@@ -1,0 +1,32 @@
+header {
+  max-width: 1400px;
+  padding: 10px;
+  background-color: #343434;
+  box-shadow: 0 0 10px 1px rgb(155, 155, 155);
+  color: #fff;
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    .sup-links {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+      & li {
+        & a {
+          color: #b3b3b3;
+          padding-bottom: 3px;
+          transition: all ease-in .2s;
+          &.active, &:hover {
+            color: #fff;
+            border-bottom: 1px solid  ;
+            
+          }
+        }
+      }
+    }
+  }
+}
