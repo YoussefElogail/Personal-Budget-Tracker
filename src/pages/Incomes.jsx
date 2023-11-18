@@ -41,7 +41,7 @@ const Incomes = () => {
   const deletee = (itme) => {
     dispatch(actions.deleteIncomes(itme))
   }
-  return <Table {...{ data, totalPrice, show, toggleShow, done, deletee }} />;
+  return <Table pageName={"Incomes"}{...{ data, totalPrice, show, toggleShow, done, deletee }} />;
 };
 
 export default Incomes;

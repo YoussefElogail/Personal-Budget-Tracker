@@ -7,7 +7,7 @@ const Table = ({ pageName,data, totalPrice, show, toggleShow, done,deletee  }) =
     <section className="incomes-sec">
       <h1>{pageName}</h1>
       <div>
-        <button onClick={toggleShow}>Add Income</button>
+        <button onClick={toggleShow}>Add {pageName}</button>
       </div>
       <table className="incomes-table">
         <thead>

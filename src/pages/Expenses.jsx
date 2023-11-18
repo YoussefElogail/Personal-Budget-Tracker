@@ -41,7 +41,7 @@ const Expenses = () => {
     dispatch(actions.deleteExpenses(itme))
   }
   return (
-    <Table {...{data,totalPrice,show,toggleShow,done,deletee}}/>
+    <Table pageName={"Expenses"} {...{data,totalPrice,show,toggleShow,done,deletee}}/>
   );
 }
 
