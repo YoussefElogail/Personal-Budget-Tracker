@@ -13,3 +13,10 @@ export const deleteExpenses = (payload) => {
     payload
   }
 }
+
+export const deleteLastExpenses = () => {
+  return{
+    type: actionsTypes.Delete_LAST_EXPENSES,
+    
+  }
+}

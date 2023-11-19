@@ -12,18 +12,26 @@ function App() {
   const incomesData = useSelector((store) => store.incomes);
   const expensesData = useSelector((store) => store.expenses);
 
+  let totalIncomesPrice = JSON.parse(localStorage.getItem("incomes"))?incomesData.reduce((acc,income)=>{
+    return acc += Number(income.price)
+  },0):0
+  
+  let totalExpensesPrice = JSON.parse(localStorage.getItem("expenses"))?expensesData.reduce((acc,income)=>{
+    return acc += Number(income.price)
+    },0) : 0
   useEffect(()=>{
     localStorage.setItem("incomes",JSON.stringify(incomesData))
     localStorage.setItem("expenses",JSON.stringify(expensesData))
   },[incomesData,expensesData])
+  
   return (
     <>
         <Header />
         <main className="main">
           <Routes>
-            <Route path="/" element={<Summary />} />
-            <Route path="/incomes" element={<Incomes />} />
-            <Route path="/expenses" element={<Expenses />} />
+            <Route path="/" element={<Summary  {...{totalIncomesPrice, totalExpensesPrice}}/>} />
+            <Route path="/incomes" element={<Incomes {...{totalIncomesPrice, totalExpensesPrice}}/>} />
+            <Route path="/expenses" element={<Expenses {...{totalIncomesPrice, totalExpensesPrice}}/>} />
             <Route
               path="*"
               element={

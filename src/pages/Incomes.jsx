@@ -4,13 +4,11 @@ import * as actions from "../redux/incomes/actions";
 
 import Table from "../components/Table";
 
-const Incomes = () => {
+const Incomes = ({totalIncomesPrice, totalExpensesPrice}) => {
   const [show, setShow] = useState(false);
   const data = useSelector((store) => store.incomes);
   const dispatch = useDispatch();
-  let totalPrice = data.reduce((acc, income) => {
-    return (acc += Number(income.price));
-  }, 0);
+  let totalPrice = totalIncomesPrice
   const toggleShow = () => {
     setShow(!show);
   };
@@ -37,11 +35,12 @@ const Incomes = () => {
     );
     toggleShow();
   };
+  
 
   const deletee = (itme) => {
     dispatch(actions.deleteIncomes(itme))
   }
-  return <Table pageName={"Incomes"}{...{ data, totalPrice, show, toggleShow, done, deletee }} />;
+  return <Table pageName={"Incomes"}{...{ data, totalPrice, show, toggleShow, done, deletee,totalExpensesPrice,totalIncomesPrice }} />;
 };
 
 export default Incomes;

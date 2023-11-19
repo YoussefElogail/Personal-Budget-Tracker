@@ -13,6 +13,7 @@ const data = income => {
 };
 
 export default (state = initialState, { type, payload }) => {
+
   switch (type) {
 
   case actionsTypes.ADD_EXPENSES:
@@ -21,9 +22,11 @@ export default (state = initialState, { type, payload }) => {
 
 
     case actionsTypes.Delete_EXPENSES:
-      console.log(payload);
       return state.filter(item => item.id !== payload.id);
 
+    case actionsTypes.Delete_LAST_EXPENSES:
+      return [...state.slice(0, -1)]
+    
   default:
     return state
   }
