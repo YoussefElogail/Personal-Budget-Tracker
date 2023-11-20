@@ -1,4 +1,4 @@
- <h1 align="center" >Todo List</h1>
+ <h1 align="center" >Personal Budget Tracker </h1>
   <img src="https://github.com/YoussefElogail/Personal-Budget-Tracker/assets/125933702/92b32432-7ad6-4dbc-9a30-27977c675bb8" />
   <a href="https://main--warm-banoffee-e8180e.netlify.app/">Live   
    preview</a>
