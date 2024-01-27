@@ -1,50 +1,65 @@
-import { Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+// Importing necessary components and functions from external libraries and files
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
+
 import Summary from "./pages/Summary";
-import Incomes from "./pages/Incomes";
-import Expenses from "./pages/Expenses";
+import { NavLinks } from "./nav-links/NavLinks";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import "./App.css";
+import Root from "./Root";
+import { ThemeProvider } from "@emotion/react";
+import { createTheme, CssBaseline } from "@mui/material";
+import { useThemeContext } from "./theme/ThemeContext";
 
 function App() {
-  const incomesData = useSelector((store) => store.incomes);
-  const expensesData = useSelector((store) => store.expenses);
+  // Accessing the theme context to toggle between light and dark themes
+  const { toggleTheme } = useThemeContext();
 
-  let totalIncomesPrice = JSON.parse(localStorage.getItem("incomes"))?incomesData.reduce((acc,income)=>{
-    return acc += Number(income.price)
-  },0):0
-  
-  let totalExpensesPrice = JSON.parse(localStorage.getItem("expenses"))?expensesData.reduce((acc,income)=>{
-    return acc += Number(income.price)
-    },0) : 0
-  useEffect(()=>{
-    localStorage.setItem("incomes",JSON.stringify(incomesData))
-    localStorage.setItem("expenses",JSON.stringify(expensesData))
-  },[incomesData,expensesData])
-  
+  // Retrieving income and expense data from the Redux store
+  const { incomes } = useSelector((state) => state.incomesReducer);
+  const { expenses } = useSelector((store) => store.expensesReducer);
+
+  // Creating a dark or light MUI theme based on the theme toggle
+  const darkTheme = createTheme({
+    palette: {
+      mode: toggleTheme, // Using the toggleTheme state to determine the theme mode
+    },
+  });
+
+  // Saving theme, incomes, and expenses to localStorage on changes
+  useEffect(() => {
+    localStorage.setItem("theme", toggleTheme);
+    localStorage.setItem("incomes", JSON.stringify(incomes));
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+  }, [toggleTheme, incomes, expenses]);
+
+  // Creating routes using react-router-dom and defining their elements
+  const AppRoutes = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<Root />}>
+        <Route index element={<Summary />} />
+
+        {NavLinks().map((link, i) =>
+          link.path !== "/" ? (
+            <Route key={i} path={link.path} element={link.pageComponent} />
+          ) : null
+        )}
+      </Route>
+    )
+  );
+
+  // Rendering the main application component with MUI theme and routing
   return (
-    <>
-        <Header />
-        <main className="main">
-          <Routes>
-            <Route path="/" element={<Summary  {...{totalIncomesPrice, totalExpensesPrice}}/>} />
-            <Route path="/incomes" element={<Incomes {...{totalIncomesPrice, totalExpensesPrice}}/>} />
-            <Route path="/expenses" element={<Expenses {...{totalIncomesPrice, totalExpensesPrice}}/>} />
-            <Route
-              path="*"
-              element={
-                <>
-                  <h1>Page not found 404</h1>
-                </>
-              }
-            />
-          </Routes>
-        </main>
-        <Footer />
-    </>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <RouterProvider router={AppRoutes} />
+    </ThemeProvider>
   );
 }
 
+// Exporting the App component as the default export
 export default App;

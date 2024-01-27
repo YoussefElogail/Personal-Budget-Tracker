@@ -1,16 +1,32 @@
+// React imports
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
-import { BrowserRouter as Router } from "react-router-dom";
+
+// Importing Roboto font styles
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
+// Theme context provider for theming in the application
+import { ThemeContextProvider } from "./theme/ThemeContext.jsx";
+
+// Redux imports
 import { Provider } from "react-redux";
-import "./index.css";
-import { store } from "./redux/store.js";
+import { store } from "./store/store.js";
+
+// Create a root for the ReactDOM (concurrent mode)
 ReactDOM.createRoot(document.getElementById("root")).render(
+  // React StrictMode for identifying potential problems
   <React.StrictMode>
-    <Provider store={store}>
-      <Router>
+    {/* Theme context provider */}
+    <ThemeContextProvider>
+      {/* Redux Provider providing access to the Redux store */}
+      <Provider store={store}>
+        {/* Main application component */}
         <App />
-      </Router>
-    </Provider>
+      </Provider>
+    </ThemeContextProvider>
   </React.StrictMode>
 );

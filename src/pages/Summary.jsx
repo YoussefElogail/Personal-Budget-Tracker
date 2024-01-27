@@ -1,17 +1,147 @@
-import "./Summary.css"
-const Summary = ({totalIncomesPrice, totalExpensesPrice}) => {
-  
+// Importing necessary MUI components and styles
+import { Box, Link, Paper, Typography } from "@mui/material";
+import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import formatCurrency from "../shared/formatCurrency";
+
+// Define colors for the pie chart
+const palette = ["green", "red", "blue"];
+
+// Define size for the pie chart
+const size = {
+  width: 500,
+  height: 300,
+};
+
+// Summary component
+const Summary = () => {
+  // Redux selectors to get incomes and expenses data from the store
+  const { incomes } = useSelector((state) => state.incomesReducer);
+  const { expenses } = useSelector((store) => store.expensesReducer);
+
+  // React Router's useNavigate hook for navigation
+  const navigate = useNavigate();
+
+  // Calculate total incomes and expenses
+  const totalIncomes = incomes.reduce((acc, cur) => acc + cur.price, 0);
+  const totalExpenses = expenses.reduce((acc, cur) => acc + cur.price, 0);
+
+  // Prepare data for the pie chart
+  const data = [
+    { value: totalIncomes, label: "Incomes" },
+    { value: totalExpenses, label: "Expenses" },
+  ];
+
+  // Calculate the balance
+  const balance = formatCurrency(totalIncomes - totalExpenses);
 
   return (
-    <section className="summary-sec">
-      <div>
-        <h2>summary</h2>
-        <p>total incomes: <span style={{color: "var(---primaryColour)"}}>${totalIncomesPrice}</span></p>
-        <p>total expenses: <span style={{color: "var(---secondColor)"}}>${totalExpensesPrice}</span></p>
-        <p>balance: <span style={{color: totalIncomesPrice < totalExpensesPrice ? "var(---secondColor)" : "var(---primaryColour)"}}>${totalIncomesPrice - totalExpensesPrice}</span></p>
-      </div>
-    </section>
-  )
-}
+    <Box
+      component="section"
+      sx={{
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: `calc(100vh - 64px)`,
+        "& > :not(style)": {
+          m: 1,
+          py: "12px",
+          px: "18px",
+          maxWidth: "800px",
+          height: "fit-content",
+        },
+      }}
+    >
+      <Paper elevation={6}>
+        {incomes.length > 0 || expenses.length > 0 ? (
+          <>
+            {/* Displaying summary header */}
+            <Typography
+              variant="h4"
+              component="h1"
+              sx={{
+                color: "white",
+                fontWeight: "bold",
+                p: 2,
+                textAlign: "center",
+              }}
+            >
+              Summary
+            </Typography>
+            {/* Displaying pie chart (visible on larger screens) */}
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              <PieChart
+                colors={palette}
+                series={[
+                  {
+                    arcLabel: (item) => `${item.label}: ${item.value}`,
+                    data,
+                    highlightScope: { faded: "global", highlighted: "item" },
+                    faded: {
+                      innerRadius: 30,
+                      additionalRadius: -30,
+                      color: "gray",
+                    },
+                  },
+                ]}
+                sx={{
+                  [`& .${pieArcLabelClasses.root}`]: {
+                    fill: "white",
+                    fontWeight: "bold",
+                  },
+                }}
+                {...size}
+              />
+            </Box>
+            {/* Displaying data (visible on smaller screens) */}
+            <Box sx={{ display: { xs: "block", sm: "none" } }}>
+              {data.map((item, i) => (
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: "white",
+                    fontWeight: "bold",
+                    p: 2,
+                    textAlign: "center",
+                  }}
+                  key={i}
+                >
+                  {item.label}: {item.value}
+                </Typography>
+              ))}
+            </Box>
+            {/* Displaying balance */}
+            <Typography
+              variant="h6"
+              sx={{
+                color: "white",
+                fontWeight: "bold",
+                p: 2,
+                textAlign: "center",
+              }}
+            >
+              Balance: {balance}
+            </Typography>
+          </>
+        ) : (
+          <>
+          {/* Displaying welcome message when there is no data */}
+            <Typography variant="h4">
+              Welcome to the Budget Tracker, please{" "}
+              <Link
+                sx={{ cursor: "pointer" }}
+                onClick={() => navigate("/incomes")}
+              >
+                add your income
+              </Link>{" "}
+              to get started
+            </Typography>
+          </>
+        )}
+      </Paper>
+    </Box>
+  );
+};
 
-export default Summary
+// Exporting the Summary component as the default export
+export default Summary;

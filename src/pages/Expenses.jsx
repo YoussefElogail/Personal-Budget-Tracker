@@ -1,60 +1,103 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// Importing necessary React hooks and components
+import { useState } from "react";
 import Table from "../components/Table";
-import * as actions from "../redux/expenses/actions";
+import Form from "../components/Form";
+import PageHeader from "../components/PageHeader";
+import { DeletePopup } from "../components/DeletePopup";
+import { useDispatch, useSelector } from "react-redux";
+import { expensesActions } from "../store/expenses/expensesSlice";
+import ActionAlert from "../components/ActionAlert";
 
-const Expenses = ({ totalIncomesPrice, totalExpensesPrice }) => {
-  const [show, setShow] = useState(false);
-  const data = useSelector((store) => store.expenses);
-  const dispatch = useDispatch();
-  const [isExpensesBigger, setIsExpensesBigger] = useState(false)
-  let totalPrice = totalExpensesPrice;
-  const toggleShow = () => {
-    setShow(!show);
-  };
-  const doNotAddExpensesFunc = () => {
-    if (totalExpensesPrice > totalIncomesPrice) {
-      setIsExpensesBigger(true)
-      return  dispatch(actions.deleteLastExpenses())
-    }else{
-      return null
-    }
+// Expenses component
+const Expenses = () => {
+  // State variables for managing selected row data and modal visibility
+  const [selectedRowData, setSelectedRowData] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [openDeletePopup, setOpenDeletePopup] = useState(false);
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const handleAlert = (message,timeToHide) => {
+    setShowAlert(true)
+    setAlertMessage(message)
+    setTimeout(() => {
+      setShowAlert(false)
+    }, timeToHide);
   }
 
-  const done = (e, price, category, date, description) => {
-    e.preventDefault();
-    if (
-      !price ||
-      isNaN(parseFloat(price)) ||
-      price <= 0 ||
-      !category ||
-      !date ||
-      !description
-    ) {
-      alert("Invalid input. Please fill in all fields with valid values.");
-      return;
-    }
-    dispatch(
-      actions.addExpenses({
-        price: parseFloat(price),
-        category,
-        date,
-        description,
-      })
-      );
-      setIsExpensesBigger(false)
-    toggleShow();
+  // Redux selector to get expenses data from the store
+  const { expenses } = useSelector((store) => store.expensesReducer);
+
+  // Redux dispatcher for dispatching actions
+  const dispatch = useDispatch();
+
+  // Function to toggle the modal for adding or editing expenses data
+  const openOrClose = (rowData) => {
+    setOpen(!open);
+    setSelectedRowData(open ? null : rowData);
   };
 
-  const deletee = (itme) => {
-    dispatch(actions.deleteExpenses(itme));
+  // Function to toggle the delete confirmation popup
+  const openOrCloseDeletePopup = (rowData) => {
+    setOpenDeletePopup(!openDeletePopup);
+    setSelectedRowData(openDeletePopup ? null : rowData);
   };
+
+  // Function to handle adding expenses data
+  const handleAdd = (data) => {
+    dispatch(expensesActions.addExpenses(data));
+    openOrClose();
+    handleAlert("Expense added successfully",3000)
+  };
+
+  // Function to handle editing expenses data
+  const handleEdit = (data) => {
+    dispatch(expensesActions.editExpenses(data));
+    openOrClose();
+    handleAlert("The expense has been modified successfully",3000)
+  };
+
+  // Function to handle deleting expenses data
+  const handleDelete = () => {
+    dispatch(expensesActions.removeExpenses(selectedRowData.id));
+    openOrCloseDeletePopup();
+    handleAlert("The expense was deleted successfully",3000)
+  };
+
+  // Rendering the components - PageHeader, Table, Form, and DeletePopup
   return (
-    <Table
-      pageName={"Expenses"}
-      {...{ data, totalPrice, show, toggleShow, done, deletee,totalIncomesPrice,totalExpensesPrice,doNotAddExpensesFunc ,isExpensesBigger}}
-    />
+    <>
+      {/* Page header component */}
+      <PageHeader {...{ openOrClose }} pageName={"Expenses"} />
+      {/* Table component for displaying expenses data */}
+      {showAlert && <ActionAlert {...{ alertMessage }} />}
+      <Table
+        {...{
+          noData: "There are no expenses yet, please add expense",
+          openOrClose,
+          open,
+          data: expenses,
+          openOrCloseDeletePopup,
+        }}
+      />
+      {/* Form component for adding or editing expenses data */}
+      <Form
+        FormType={selectedRowData ? "Edit expense" : "Add expense"}
+        {...{ open, openOrClose, selectedRowData, handleAdd, handleEdit }}
+      />
+      {/* DeletePopup component for confirming deletion of expenses data */}
+      <DeletePopup
+        {...{
+          openDeletePopup,
+          openOrCloseDeletePopup,
+          selectedRowData,
+          handleDelete,
+        }}
+      />
+    </>
   );
 };
 
+// Exporting the Expenses component as the default export
 export default Expenses;
