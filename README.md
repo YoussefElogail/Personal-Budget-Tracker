@@ -2,7 +2,7 @@
 
  <h3>v2:</h3>
   <img src="https://github.com/YoussefElogail/Personal-Budget-Tracker/assets/125933702/295779f2-3b97-4dda-956c-4cdb7fabab4b" />
-  <a href="https://main--warm-banoffee-e8180e.netlify.app/">Live   
+  <a href="https://personall-budget-tracker.netlify.app/">Live   
    preview</a>
   <br>
   <h2>Using:</h2>
@@ -25,8 +25,6 @@
 
  <h3>v1:</h3>
   <img src="https://github.com/YoussefElogail/Personal-Budget-Tracker/assets/125933702/92b32432-7ad6-4dbc-9a30-27977c675bb8" />
-  <a href="https://main--warm-banoffee-e8180e.netlify.app/">Live   
-   preview</a>
   <br>
   <h2>Using:</h2>
 
