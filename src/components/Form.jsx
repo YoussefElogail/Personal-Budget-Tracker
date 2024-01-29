@@ -137,6 +137,7 @@ const Form = ({
   };
 
   return (
+    // Dialog component for the form
     <Dialog
       open={open}
       TransitionComponent={Transition}
@@ -144,18 +145,23 @@ const Form = ({
       onClose={closeForm}
       aria-labelledby="form-dialog-title"
     >
+      {/* Form content within a Box component */}
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+        {/* Dialog title */}
         <DialogTitle>{FormType}</DialogTitle>
         <DialogContent>
+          {/* Display error message if showMessage is true */}
           {showMessage && (
             <DialogContentText color="error">
               It is not possible to modify or add because the total expenses
               will exceed the total income or the total income will be negative.
             </DialogContentText>
           )}
+          {/* Grid container for form inputs */}
           <Grid container spacing={2}>
             {/* Category Select */}
             <Grid item sm={6} xs={12}>
+              {/* Controller for handling the category select input */}
               <Controller
                 name="category"
                 control={control}
@@ -185,6 +191,7 @@ const Form = ({
             </Grid>
             {/* Price TextField */}
             <Grid item sm={6} xs={12}>
+              {/* Controller for handling the price input */}
               <Controller
                 name="price"
                 control={control}
@@ -207,6 +214,7 @@ const Form = ({
             </Grid>
             {/* Date Picker */}
             <Grid item xs={12}>
+              {/* Controller for handling the date input */}
               <Controller
                 name="date"
                 control={control}
@@ -230,6 +238,7 @@ const Form = ({
             </Grid>
             {/* Description TextArea */}
             <Grid item xs={12}>
+              {/* Controller for handling the description input */}
               <Controller
                 name="description"
                 control={control}
@@ -253,6 +262,7 @@ const Form = ({
             </Grid>
           </Grid>
         </DialogContent>
+        {/* Dialog actions */}
         <DialogActions>
           <Button variant="outlined" onClick={closeForm}>
             Cancel

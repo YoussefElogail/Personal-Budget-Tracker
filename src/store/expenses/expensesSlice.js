@@ -1,8 +1,9 @@
+// Importing necessary functions and reducers from the Redux Toolkit library
 import { createSlice } from "@reduxjs/toolkit";
 
 // Initial state of the expenses slice
 const initialState = {
-  expenses: JSON.parse(localStorage.getItem("expenses")) || [],
+  expenses: JSON.parse(localStorage.getItem("expenses")) || [], // Retrieve stored expenses from local storage or default to an empty array
 };
 
 // Create the expenses slice using createSlice

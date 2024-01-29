@@ -18,13 +18,14 @@ const Expenses = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
-  const handleAlert = (message,timeToHide) => {
-    setShowAlert(true)
-    setAlertMessage(message)
+  // Function to show an alert for a certain time
+  const handleAlert = (message, timeToHide) => {
+    setShowAlert(true);
+    setAlertMessage(message);
     setTimeout(() => {
-      setShowAlert(false)
+      setShowAlert(false);
     }, timeToHide);
-  }
+  };
 
   // Redux selector to get expenses data from the store
   const { expenses } = useSelector((store) => store.expensesReducer);
@@ -48,21 +49,21 @@ const Expenses = () => {
   const handleAdd = (data) => {
     dispatch(expensesActions.addExpenses(data));
     openOrClose();
-    handleAlert("Expense added successfully",3000)
+    handleAlert("Expense added successfully", 3000);
   };
 
   // Function to handle editing expenses data
   const handleEdit = (data) => {
     dispatch(expensesActions.editExpenses(data));
     openOrClose();
-    handleAlert("The expense has been modified successfully",3000)
+    handleAlert("The expense has been modified successfully", 3000);
   };
 
   // Function to handle deleting expenses data
   const handleDelete = () => {
     dispatch(expensesActions.removeExpenses(selectedRowData.id));
     openOrCloseDeletePopup();
-    handleAlert("The expense was deleted successfully",3000)
+    handleAlert("The expense was deleted successfully", 3000);
   };
 
   // Rendering the components - PageHeader, Table, Form, and DeletePopup
@@ -70,11 +71,12 @@ const Expenses = () => {
     <>
       {/* Page header component */}
       <PageHeader {...{ openOrClose }} pageName={"Expenses"} />
-      {/* Table component for displaying expenses data */}
+      {/* Displaying an alert if showAlert is true */}
       {showAlert && <ActionAlert {...{ alertMessage }} />}
+      {/* Table component for displaying expenses data */}
       <Table
         {...{
-          noData: "There are no expenses yet, please add expense",
+          noData: "There are no expenses yet, please add an expense",
           openOrClose,
           open,
           data: expenses,

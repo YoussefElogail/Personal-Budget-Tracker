@@ -6,6 +6,7 @@ import Form from "../components/Form";
 import { DeletePopup } from "../components/DeletePopup";
 import { useDispatch, useSelector } from "react-redux";
 import { incomeActions } from "../store/incomes/incomesSlice";
+import ActionAlert from "../components/ActionAlert";
 
 // Incomes component
 const Incomes = () => {
@@ -17,16 +18,17 @@ const Incomes = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
+  // Function to show an alert for a certain time
   const handleAlert = (message, timeToHide) => {
-    setShowAlert(true)
-    setAlertMessage(message)
+    setShowAlert(true);
+    setAlertMessage(message);
     setTimeout(() => {
-      setShowAlert(false)
+      setShowAlert(false);
     }, timeToHide);
-  }
+  };
 
   // Redux selector to get income data from the store
-  const { incomes } = useSelector((state) => state.incomesReducer); // Adjust the slice name
+  const { incomes } = useSelector((state) => state.incomesReducer);
 
   // Redux dispatcher for dispatching actions
   const dispatch = useDispatch();
@@ -61,6 +63,7 @@ const Incomes = () => {
   const handleDelete = () => {
     dispatch(incomeActions.removeIncome(selectedRowData.id));
     openOrCloseDeletePopup();
+    handleAlert("The income was deleted successfully", 3000);
   };
 
   // Rendering the components - PageHeader, Table, Form, and DeletePopup
@@ -68,12 +71,13 @@ const Incomes = () => {
     <>
       {/* Page header component */}
       <PageHeader {...{ openOrClose }} pageName={"Incomes"} />
+      {showAlert && <ActionAlert {...{ alertMessage }} />}
       {/* Table component for displaying income data */}
       <Table
         {...{
           openOrClose,
           open,
-          noData:"There are no incomes yet, please add income",
+          noData: "There are no incomes yet, please add income",
           data: incomes,
           openOrCloseDeletePopup,
         }}

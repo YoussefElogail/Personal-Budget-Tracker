@@ -55,7 +55,9 @@ const Table = ({ noData, data, openOrClose, openOrCloseDeletePopup }) => {
 
   // Rendering the DataGrid component with the specified data and columns
   return (
+    // Box component used for styling and layout purposes.
     <Box component="section">
+      {/* DataGrid component for displaying tabular data */}
       <DataGrid
         rows={data}
         columns={allColumns}

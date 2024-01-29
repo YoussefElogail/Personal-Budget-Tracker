@@ -37,6 +37,7 @@ const Summary = () => {
   const balance = formatCurrency(totalIncomes - totalExpenses);
 
   return (
+    // Box component for styling and layout purposes
     <Box
       component="section"
       sx={{
@@ -52,7 +53,9 @@ const Summary = () => {
         },
       }}
     >
+      {/* Paper component for a styled elevation effect */}
       <Paper elevation={6}>
+        {/* Check if there is any income or expense data */}
         {incomes.length > 0 || expenses.length > 0 ? (
           <>
             {/* Displaying summary header */}
@@ -70,6 +73,7 @@ const Summary = () => {
             </Typography>
             {/* Displaying pie chart (visible on larger screens) */}
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              {/* PieChart component for visualizing income and expense data */}
               <PieChart
                 colors={palette}
                 series={[
@@ -95,6 +99,7 @@ const Summary = () => {
             </Box>
             {/* Displaying data (visible on smaller screens) */}
             <Box sx={{ display: { xs: "block", sm: "none" } }}>
+              {/* Loop through data and display it as Typography components */}
               {data.map((item, i) => (
                 <Typography
                   variant="body1"
@@ -111,6 +116,7 @@ const Summary = () => {
               ))}
             </Box>
             {/* Displaying balance */}
+            {/* Typography component for displaying the calculated balance */}
             <Typography
               variant="h6"
               sx={{
@@ -125,9 +131,10 @@ const Summary = () => {
           </>
         ) : (
           <>
-          {/* Displaying welcome message when there is no data */}
+            {/* Displaying welcome message when there is no data */}
             <Typography variant="h4">
               Welcome to the Budget Tracker, please{" "}
+              {/* Link component to navigate to the incomes page */}
               <Link
                 sx={{ cursor: "pointer" }}
                 onClick={() => navigate("/incomes")}

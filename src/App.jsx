@@ -6,15 +6,17 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import Summary from "./pages/Summary";
 import { NavLinks } from "./nav-links/NavLinks";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import Root from "./Root";
+import Summary from "./pages/Summary";
+
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme, CssBaseline } from "@mui/material";
 import { useThemeContext } from "./theme/ThemeContext";
 
+// Function component representing the main application
 function App() {
   // Accessing the theme context to toggle between light and dark themes
   const { toggleTheme } = useThemeContext();
