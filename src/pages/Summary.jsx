@@ -4,6 +4,7 @@ import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import formatCurrency from "../shared/formatCurrency";
+import { Helmet } from "react-helmet-async";
 
 // Define colors for the pie chart
 const palette = ["green", "red", "blue"];
@@ -38,115 +39,123 @@ const Summary = () => {
 
   return (
     // Box component for styling and layout purposes
-    <Box
-      component="section"
-      sx={{
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: `calc(100vh - 64px)`,
-        "& > :not(style)": {
-          m: 1,
-          py: "12px",
-          px: "18px",
-          maxWidth: "800px",
-          height: "fit-content",
-        },
-      }}
-    >
-      {/* Paper component for a styled elevation effect */}
-      <Paper elevation={6}>
-        {/* Check if there is any income or expense data */}
-        {incomes.length > 0 || expenses.length > 0 ? (
-          <>
-            {/* Displaying summary header */}
-            <Typography
-              variant="h4"
-              component="h1"
-              sx={{
-                color: "white",
-                fontWeight: "bold",
-                p: 2,
-                textAlign: "center",
-              }}
-            >
-              Summary
-            </Typography>
-            {/* Displaying pie chart (visible on larger screens) */}
-            <Box sx={{ display: { xs: "none", sm: "block" } }}>
-              {/* PieChart component for visualizing income and expense data */}
-              <PieChart
-                colors={palette}
-                series={[
-                  {
-                    arcLabel: (item) => `${item.label}: ${item.value}`,
-                    data,
-                    highlightScope: { faded: "global", highlighted: "item" },
-                    faded: {
-                      innerRadius: 30,
-                      additionalRadius: -30,
-                      color: "gray",
-                    },
-                  },
-                ]}
+    <>
+      {/* Setting metadata using Helmet */}
+      <Helmet prioritizeSeoTags>
+        <title>Summary</title>
+        <meta name="description" content="The dedicated page for displaying the overall amount of income, expenses, and net income" />
+      </Helmet>
+      {/* Styling and layout with Box component */}
+      <Box
+        component="section"
+        sx={{
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: `calc(100vh - 64px)`,
+          "& > :not(style)": {
+            m: 1,
+            py: "12px",
+            px: "18px",
+            maxWidth: "800px",
+            height: "fit-content",
+          },
+        }}
+      >
+        {/* Paper component for a styled elevation effect */}
+        <Paper elevation={6}>
+          {/* Check if there is any income or expense data */}
+          {incomes.length > 0 || expenses.length > 0 ? (
+            <>
+              {/* Displaying summary header */}
+              <Typography
+                variant="h4"
+                component="h1"
                 sx={{
-                  [`& .${pieArcLabelClasses.root}`]: {
-                    fill: "white",
-                    fontWeight: "bold",
-                  },
+                  color: "white",
+                  fontWeight: "bold",
+                  p: 2,
+                  textAlign: "center",
                 }}
-                {...size}
-              />
-            </Box>
-            {/* Displaying data (visible on smaller screens) */}
-            <Box sx={{ display: { xs: "block", sm: "none" } }}>
-              {/* Loop through data and display it as Typography components */}
-              {data.map((item, i) => (
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: "white",
-                    fontWeight: "bold",
-                    p: 2,
-                    textAlign: "center",
-                  }}
-                  key={i}
-                >
-                  {item.label}: {item.value}
-                </Typography>
-              ))}
-            </Box>
-            {/* Displaying balance */}
-            {/* Typography component for displaying the calculated balance */}
-            <Typography
-              variant="h6"
-              sx={{
-                color: "white",
-                fontWeight: "bold",
-                p: 2,
-                textAlign: "center",
-              }}
-            >
-              Balance: {balance}
-            </Typography>
-          </>
-        ) : (
-          <>
-            {/* Displaying welcome message when there is no data */}
-            <Typography variant="h4">
-              Welcome to the Budget Tracker, please{" "}
-              {/* Link component to navigate to the incomes page */}
-              <Link
-                sx={{ cursor: "pointer" }}
-                onClick={() => navigate("/incomes")}
               >
-                add your income
-              </Link>{" "}
-              to get started
-            </Typography>
-          </>
-        )}
-      </Paper>
-    </Box>
+                Summary
+              </Typography>
+              {/* Displaying pie chart (visible on larger screens) */}
+              <Box sx={{ display: { xs: "none", sm: "block" } }}>
+                {/* PieChart component for visualizing income and expense data */}
+                <PieChart
+                  colors={palette}
+                  series={[
+                    {
+                      arcLabel: (item) => `${item.label}: ${item.value}`,
+                      data,
+                      highlightScope: { faded: "global", highlighted: "item" },
+                      faded: {
+                        innerRadius: 30,
+                        additionalRadius: -30,
+                        color: "gray",
+                      },
+                    },
+                  ]}
+                  sx={{
+                    [`& .${pieArcLabelClasses.root}`]: {
+                      fill: "white",
+                      fontWeight: "bold",
+                    },
+                  }}
+                  {...size}
+                />
+              </Box>
+              {/* Displaying data (visible on smaller screens) */}
+              <Box sx={{ display: { xs: "block", sm: "none" } }}>
+                {/* Loop through data and display it as Typography components */}
+                {data.map((item, i) => (
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: "white",
+                      fontWeight: "bold",
+                      p: 2,
+                      textAlign: "center",
+                    }}
+                    key={i}
+                  >
+                    {item.label}: {item.value}
+                  </Typography>
+                ))}
+              </Box>
+              {/* Displaying balance */}
+              {/* Typography component for displaying the calculated balance */}
+              <Typography
+                variant="h6"
+                sx={{
+                  color: "white",
+                  fontWeight: "bold",
+                  p: 2,
+                  textAlign: "center",
+                }}
+              >
+                Balance: {balance}
+              </Typography>
+            </>
+          ) : (
+            <>
+              {/* Displaying welcome message when there is no data */}
+              <Typography variant="h4">
+                Welcome to the Budget Tracker, please{" "}
+                {/* Link component to navigate to the incomes page */}
+                <Link
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => navigate("/incomes")}
+                >
+                  add your income
+                </Link>{" "}
+                to get started
+              </Typography>
+            </>
+          )}
+        </Paper>
+      </Box>
+    </>
   );
 };
 

@@ -9,6 +9,9 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
+// HelmetProvider for managing document head updates
+import { HelmetProvider } from "react-helmet-async";
+
 // Theme context provider for theming in the application
 import { ThemeContextProvider } from "./theme/ThemeContext.jsx";
 
@@ -20,13 +23,16 @@ import { store } from "./store/store.js";
 ReactDOM.createRoot(document.getElementById("root")).render(
   // React StrictMode for identifying potential problems
   <React.StrictMode>
-    {/* Theme context provider */}
-    <ThemeContextProvider>
-      {/* Redux Provider providing access to the Redux store */}
-      <Provider store={store}>
-        {/* Main application component */}
-        <App />
-      </Provider>
-    </ThemeContextProvider>
+    {/* HelmetProvider for managing document head updates */}
+    <HelmetProvider>
+      {/* Theme context provider for managing application theming */}
+      <ThemeContextProvider>
+        {/* Redux Provider providing access to the Redux store */}
+        <Provider store={store}>
+          {/* Main application component */}
+          <App />
+        </Provider>
+      </ThemeContextProvider>
+    </HelmetProvider>
   </React.StrictMode>
 );

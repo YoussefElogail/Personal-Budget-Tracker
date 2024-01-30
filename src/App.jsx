@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme, CssBaseline } from "@mui/material";
 import { useThemeContext } from "./theme/ThemeContext";
+import { Helmet } from "react-helmet-async";
 
 // Function component representing the main application
 function App() {
@@ -45,6 +46,7 @@ function App() {
       <Route path="/" element={<Root />}>
         <Route index element={<Summary />} />
 
+        {/* Mapping through NavLinks and creating routes */}
         {NavLinks().map((link, i) =>
           link.path !== "/" ? (
             <Route key={i} path={link.path} element={link.pageComponent} />
@@ -56,10 +58,19 @@ function App() {
 
   // Rendering the main application component with MUI theme and routing
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <RouterProvider router={AppRoutes} />
-    </ThemeProvider>
+    <>
+      {/* Setting metadata using Helmet */}
+      <Helmet>
+        <meta name="author" content="Youssef Elogail" />
+      </Helmet>
+      {/* Applying the MUI theme and providing the router */}
+      <ThemeProvider theme={darkTheme}>
+        {/* Applying MUI's baseline CSS styles */}
+        <CssBaseline />
+        {/* Providing the router context */}
+        <RouterProvider router={AppRoutes} />
+      </ThemeProvider>
+    </>
   );
 }
 

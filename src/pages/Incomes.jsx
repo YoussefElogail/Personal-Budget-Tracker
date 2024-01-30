@@ -7,6 +7,7 @@ import { DeletePopup } from "../components/DeletePopup";
 import { useDispatch, useSelector } from "react-redux";
 import { incomeActions } from "../store/incomes/incomesSlice";
 import ActionAlert from "../components/ActionAlert";
+import { Helmet } from "react-helmet-async";
 
 // Incomes component
 const Incomes = () => {
@@ -69,6 +70,11 @@ const Incomes = () => {
   // Rendering the components - PageHeader, Table, Form, and DeletePopup
   return (
     <>
+      {/* Setting metadata using Helmet */}
+      <Helmet prioritizeSeoTags>
+        <title>Incomes</title>
+        <meta name="description" content="The dedicated page for adding, editing, or deleting income." />
+      </Helmet>
       {/* Page header component */}
       <PageHeader {...{ openOrClose }} pageName={"Incomes"} />
       {showAlert && <ActionAlert {...{ alertMessage }} />}

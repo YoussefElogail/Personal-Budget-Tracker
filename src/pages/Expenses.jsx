@@ -7,6 +7,7 @@ import { DeletePopup } from "../components/DeletePopup";
 import { useDispatch, useSelector } from "react-redux";
 import { expensesActions } from "../store/expenses/expensesSlice";
 import ActionAlert from "../components/ActionAlert";
+import { Helmet } from "react-helmet-async";
 
 // Expenses component
 const Expenses = () => {
@@ -69,6 +70,13 @@ const Expenses = () => {
   // Rendering the components - PageHeader, Table, Form, and DeletePopup
   return (
     <>
+      <Helmet prioritizeSeoTags>
+        <title>Expenses</title>
+        <meta
+          name="description"
+          content="The dedicated page for adding, editing, or deleting expense."
+        />
+      </Helmet>
       {/* Page header component */}
       <PageHeader {...{ openOrClose }} pageName={"Expenses"} />
       {/* Displaying an alert if showAlert is true */}
