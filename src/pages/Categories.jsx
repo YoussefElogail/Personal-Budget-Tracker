@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import PageHeader from '../components/PageHeader';
 import ActionAlert from '../components/ActionAlert';
 import { DeletePopup } from '../components/DeletePopup';
-import CategoriesTable from '../components/categoriesTable';
+import CategoriesTable from '../components/CategoriesTable';
 import CategoriesForm from '../components/CategoriesForm';
 import { CategoriesDeletePopup } from '../components/CategoriesDeletePopup';
 
