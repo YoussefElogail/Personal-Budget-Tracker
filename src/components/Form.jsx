@@ -13,6 +13,7 @@ import {
   Slide,
   Box,
   DialogContentText,
+  Typography,
 } from "@mui/material";
 import category from "../../category.json";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
@@ -78,6 +79,7 @@ const Form = ({
   };
 
   // Extracting expenses and incomes from Redux store
+  const { categories } = useSelector((state) => state.categoriesReducer);
   const { expenses } = useSelector((store) => store.expensesReducer);
   const { incomes } = useSelector((state) => state.incomesReducer);
 
@@ -159,6 +161,14 @@ const Form = ({
           )}
           {/* Grid container for form inputs */}
           <Grid container spacing={2}>
+            {categories.length < 1 && (
+              <Grid item xs={12}>
+                <Typography textAlign="center" component="p" variant="body1" color="error">
+                  There are no categories, please add categories
+                </Typography>
+              </Grid>
+            )}
+
             {/* Category Select */}
             <Grid item sm={6} xs={12}>
               {/* Controller for handling the category select input */}
@@ -167,25 +177,28 @@ const Form = ({
                 control={control}
                 rules={{ required: "Category is required" }}
                 render={({ field }) => (
-                  <TextField
-                    {...field}
-                    select
-                    label="Category"
-                    margin="dense"
-                    fullWidth
-                    error={!!errors.category}
-                    helperText={errors.category?.message}
-                  >
-                    {category.map((item, i) => (
-                      <MenuItem
-                        key={i}
-                        value={item.name}
-                        sx={{ textTransform: "capitalize" }}
-                      >
-                        {item.name}
-                      </MenuItem>
-                    ))}
-                  </TextField>
+                  <>
+                    <TextField
+                      {...field}
+                      disabled={categories.length < 1}
+                      select
+                      label="Category"
+                      margin="dense"
+                      fullWidth
+                      error={!!errors.category}
+                      helperText={errors.category?.message}
+                    >
+                      {categories.map((item, i) => (
+                        <MenuItem
+                          key={i}
+                          value={item.category}
+                          sx={{ textTransform: "capitalize" }}
+                        >
+                          {item.category}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </>
                 )}
               />
             </Grid>

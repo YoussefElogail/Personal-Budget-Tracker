@@ -43,7 +43,10 @@ const Summary = () => {
       {/* Setting metadata using Helmet */}
       <Helmet prioritizeSeoTags>
         <title>Summary</title>
-        <meta name="description" content="The dedicated page for displaying the overall amount of income, expenses, and net income" />
+        <meta
+          name="description"
+          content="The dedicated page for displaying the overall amount of income, expenses, and net income"
+        />
       </Helmet>
       {/* Styling and layout with Box component */}
       <Box
@@ -71,7 +74,6 @@ const Summary = () => {
                 variant="h4"
                 component="h1"
                 sx={{
-                  color: "white",
                   fontWeight: "bold",
                   p: 2,
                   textAlign: "center",
@@ -112,7 +114,6 @@ const Summary = () => {
                   <Typography
                     variant="body1"
                     sx={{
-                      color: "white",
                       fontWeight: "bold",
                       p: 2,
                       textAlign: "center",
@@ -128,7 +129,6 @@ const Summary = () => {
               <Typography
                 variant="h6"
                 sx={{
-                  color: "white",
                   fontWeight: "bold",
                   p: 2,
                   textAlign: "center",

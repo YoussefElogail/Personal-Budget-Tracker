@@ -23,6 +23,7 @@ function App() {
   const { toggleTheme } = useThemeContext();
 
   // Retrieving income and expense data from the Redux store
+  const { categories } = useSelector((state) => state.categoriesReducer);
   const { incomes } = useSelector((state) => state.incomesReducer);
   const { expenses } = useSelector((store) => store.expensesReducer);
 
@@ -36,9 +37,10 @@ function App() {
   // Saving theme, incomes, and expenses to localStorage on changes
   useEffect(() => {
     localStorage.setItem("theme", toggleTheme);
+    localStorage.setItem("categories", JSON.stringify(categories));
     localStorage.setItem("incomes", JSON.stringify(incomes));
     localStorage.setItem("expenses", JSON.stringify(expenses));
-  }, [toggleTheme, incomes, expenses]);
+  }, [toggleTheme, categories, incomes, expenses]);
 
   // Creating routes using react-router-dom and defining their elements
   const AppRoutes = createBrowserRouter(

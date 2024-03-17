@@ -15,7 +15,7 @@ const PageHeader = ({ pageName, openOrClose }) => {
       {/* Paper component for a styled elevation effect and padding */}
       <Paper elevation={6} sx={{ width: "100%", p: "20px" }}>
         {/* Toolbar component with title and "Add" button */}
-        <Toolbar sx={{ justifyContent: "space-between" }}>
+        <Toolbar sx={{ justifyContent: "space-between", flexWrap:"wrap", gap:1 }}>
           {/* Typography component for displaying the page title */}
           <Typography variant="h4" component="h1">
             {pageName}

@@ -17,10 +17,11 @@ const Root = () => {
   const style = {
     // Adjusting margin and width based on the drawer state
     marginTop: "64px",
-    marginLeft: open ? `${drawerWidth}px` : "64px",
-    width: open ? `calc(100% - ${drawerWidth}px)` : `calc(100% - 64px)`,
+    marginLeft:  "64px",
+    width: `calc(100% - 64px)`,
     minHeight: `calc(100vh - 64px)`,
     transition: "all .2s linear",
+    overflow:"hidden",
     // Styling for sections within the main content area
     "& section": {
       py: "12px",

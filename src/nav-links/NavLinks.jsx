@@ -1,7 +1,8 @@
 // Importing page components and icons from Material-UI
 import Incomes from '../pages/Incomes';
 import Expenses from '../pages/Expenses';
-import { Home, MoneyOff, AttachMoney } from '@mui/icons-material';
+import Categories from '../pages/Categories';
+import { Home, MoneyOff, AttachMoney, LibraryAdd } from '@mui/icons-material';
 
 // Function to generate an array of navigation links
 export const NavLinks = () => {
@@ -10,6 +11,12 @@ export const NavLinks = () => {
       path: "/",              // Route path for the Summary page
       name: "Summary",        // Display name for the navigation link
       icon: <Home />,          // Material-UI icon for the navigation link
+    },
+    {
+      path: "/categories",       // Route path for the Incomes page
+      name: "categories",        // Display name for the navigation link
+      icon: <LibraryAdd />,   // Material-UI icon for the navigation link
+      pageComponent: <Categories />  // Component to be rendered when navigating to this link
     },
     {
       path: "/incomes",       // Route path for the Incomes page
